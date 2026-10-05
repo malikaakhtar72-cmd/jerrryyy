@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Javeria! 💜✨</title>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e8dff5, #f3e9f7, #d8b4fe);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Continuous Floating Balloons Background */
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            width: 35px;
+            height: 45px;
+            background-color: rgba(168, 85, 247, 0.7);
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: floatUp 8s infinite linear;
+            z-index: 1;
+        }
+        .balloon::before {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 12px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+        }
+
+        /* Falling Flowers Background */
+        .flower {
+            position: absolute;
+            top: -30px;
+            font-size: 1.2rem;
+            user-select: none;
+            animation: fall 6s infinite linear;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
+        }
+
+        /* Phone Card Container */
+        .phone-card {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 22px 18px;
+            box-shadow: 0 15px 35px rgba(125, 95, 255, 0.3);
+            border: 3px solid #d8b4fe;
+            text-align: center;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+        }
+
+        .screen.active {
+            display: block;
+            animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .bounce-img {
+            font-size: 3.2rem;
+            animation: float 2.5s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        h2 {
+            font-family: 'Fredoka One', cursive;
+            color: #7e22ce;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        p {
+            font-size: 0.85rem;
+            color: #6b21a8;
+        }
+
+        /* Passcode Section */
+        .pass-dots {
+            font-size: 1.6rem;
+            letter-spacing: 8px;
+            color: #9333ea;
+            min-height: 35px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 250px;
+            margin: 0 auto 15px auto;
+        }
+
+        .key {
+            background: #f3e8ff;
+            border: 2px solid #c084fc;
+            color: #6b21a8;
+            padding: 10px 0;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            user-select: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            transition: all 0.15s ease;
+        }
+
+        .key:active {
+            background: #a855f7;
+            color: white;
+            transform: scale(0.92);
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #a855f7, #7e22ce);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.4);
+            width: 100%;
+            max-width: 240px;
+            transition: transform 0.2s;
+        }
+
+        .btn-purple:hover {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        /* Interactive Buttons */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+            position: relative;
+            min-height: 50px;
+        }
+
+        .btn-yes {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-no {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.15s ease;
+        }
+
+        /* Memories Grid */
+        .memories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .memory-card {
+            background: #faf5ff;
+            border: 1.5px solid #e9d5ff;
+            border-radius: 16px;
+            padding: 12px 8px;
+            font-size: 0.78rem;
+            color: #581c87;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+            animation: pulseGlow 3s infinite ease-in-out alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { border-color: #e9d5ff; box-shadow: 0 3px 8px rgba(0,0,0,0.03); }
+            100% { border-color: #c084fc; box-shadow: 0 5px 12px rgba(168, 85, 247, 0.2); }
+        }
+
+        /* Animated Letter Section */
+        .envelope-box {
+            background: #f3e8ff;
+            border: 2px dashed #a855f7;
+            border-radius: 18px;
+            padding: 15px;
+            cursor: pointer;
+            margin: 12px 0;
+            transition: all 0.3s ease;
+        }
+
+        .envelope-box:hover {
+            background: #e9d5ff;
+        }
+
+        .letter-content {
+            display: none;
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 14px;
+            text-align: left;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: #4c1d95;
+            margin-top: 10px;
+            border: 1px solid #ddd6fe;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        /* Heart Cake & Candle Flame */
+        .cake-container {
+            position: relative;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .cake-emoji {
+            font-size: 4rem;
+        }
+
+        .flame {
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: #ff9f1a;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff9f1a, 0 0 20px #ff3838;
+            animation: flicker 0.4s infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(0.9); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Background Elements -->
+    <div id="balloonsContainer"></div>
+    <div id="flowersContainer"></div>
+
+    <div class="phone-card">
+
+        <!-- STEP 1: Passcode -->
+        <div class="screen active" id="step1">
+            <div class="bounce-img">🐼🌸</div>
+            <h2>Enter a passcode</h2>
+            <div class="pass-dots" id="passDisplay">____</div>
+            <div class="keypad">
+                <div class="key" onclick="pressKey('1')">1</div>
+                <div class="key" onclick="pressKey('2')">2</div>
+                <div class="key" onclick="pressKey('3')">3</div>
+                <div class="key" onclick="pressKey('4')">4</div>
+                <div class="key" onclick="pressKey('5')">5</div>
+                <div class="key" onclick="pressKey('6')">6</div>
+                <div class="key" onclick="pressKey('7')">7</div>
+                <div class="key" onclick="pressKey('8')">8</div>
+                <div class="key" onclick="pressKey('9')">9</div>
+                <div class="key" onclick="pressKey('*')">*</div>
+                <div class="key" onclick="pressKey('0')">0</div>
+                <div class="key" onclick="clearPass()">#</div>
+            </div>
+            <button class="btn-purple" onclick="checkCode()">UNLOCK 🔑</button>
+        </div>
+
+        <!-- STEP 2: Interactive Question -->
+        <div class="screen" id="step2">
+            <div class="bounce-img">🐻💖🐼</div>
+            <h2>I made something special for u, do u want to see?</h2>
+            <div class="btn-group">
+                <button class="btn-yes" onclick="nextStep(3)">YES 💕</button>
+                <button class="btn-no" id="noBtn" onmouseover="moveNo()">NO 😜</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Memories Grid -->
+        <div class="screen" id="step3">
+            <h2>Our Little World 💜✨</h2>
+            <p>Just you, me and a lifetime of cute memories 💕</p>
+            <div class="memories-grid">
+                <div class="memory-card">🐻💖<br>My favorite person, always. 💜</div>
+                <div class="memory-card">🌸✨<br>Life feels better with you in it. 💜</div>
+                <div class="memory-card">🌟🎈<br>You make my world a little brighter. 💜</div>
+                <div class="memory-card">📜💖<br>So lucky to have you, Javeria! 💜</div>
+            </div>
+            <button class="btn-purple" onclick="nextStep(4)">READ WISHES 🎁</button>
+        </div>
+
+        <!-- STEP 4: Animated Letter -->
+        <div class="screen" id="step4">
+            <h2>A Letter From My Heart ✉️💖</h2>
+            <div class="envelope-box" onclick="toggleLetter()">
+                <div style="font-size: 2.2rem;" class="bounce-img">💌</div>
+                <p style="font-weight: bold; color: #7e22ce;">Tap the envelope to open ✨</p>
+                <div class="letter-content" id="letterText">
+                    <strong>Happy Birthday, Dear Javeria! 🎂✨</strong><br><br>
+                    Today is your special day! I just want to pray that Allah fills your life with endless happiness, peace, success, and love. 🤲💕<br><br>
+                    May every dua in your heart be accepted and every difficulty become easy. I'm so grateful to have you in my life! 💖
+                </div>
+            </div>
+            <button class="btn-purple" onclick="nextStep(5)">MAKE A WISH 🎂</button>
+        </div>
+
+        <!-- STEP 5: Cake & Candle Blowing -->
+        <div class="screen" id="step5">
+            <h2>Make A Birthday Wish! 🎂✨</h2>
+            <div class="cake-container">
+                <div class="flame" id="candleFlame"></div>
+                <div class="cake-emoji">🎂</div>
+            </div>
+            <p id="wishText" style="font-weight: bold; margin-bottom: 15px;">Make a wish... 💜</p>
+            <button class="btn-purple" id="blowBtn" onclick="blowCandles()">Blow The Candles 🌬️</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Passcode Setup
+        let currentPass = "";
+        const correctPass = "1234";
+
+        function pressKey(num) {
+            if (currentPass.length < 4) {
+                currentPass += num;
+                document.getElementById('passDisplay').innerText = "*".repeat(currentPass.length) + "_".repeat(4 - currentPass.length);
+            }
+        }
+
+        function clearPass() {
+            currentPass = "";
+            document.getElementById('passDisplay').innerText = "____";
+        }
+
+        function checkCode() {
+            if (currentPass === correctPass || currentPass === "0710") {
+                // Play music on unlock
+                const music = document.getElementById('bgMusic');
+                if (music) {
+                    music.play().catch(() => {});
+                }
+                triggerConfetti();
+                nextStep(2);
+            } else {
+                alert("Wrong Passcode! Try again 😜");
+                clearPass();
+            }
+        }
+
+        function nextStep(stepNum) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+            document.getElementById('step' + stepNum).classList.add('active');
+            triggerConfetti();
+        }
+
+        function moveNo() {
+            const noBtn = document.getElementById('noBtn');
+            const x = Math.random() * 120 - 60;
+            const y = Math.random() * 80 - 40;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function toggleLetter() {
+            const letter = document.getElementById('letterText');
+            letter.style.display = (letter.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function blowCandles() {
+            document.getElementById('candleFlame').style.display = "none";
+            document.getElementById('wishText').innerText = "Wish Made! 🎉 Happy Birthday Javeria! 💖";
+            document.getElementById('blowBtn').style.display = "none";
+            triggerConfetti();
+        }
+
+        // Confetti Burst Function
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.7 },
+                    colors: ['#a855f7', '#d8b4fe', '#ff4757', '#2ed573']
+                });
+            }
+        }
+
+        // Create Animated Balloons Background
+        const balloonsContainer = document.getElementById('balloonsContainer');
+        const balloonColors = ['#c084fc', '#a855f7', '#e8dff5', '#e9d5ff', '#a78bfa'];
+        
+        for (let i = 0; i < 12; i++) {
+            let balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * 100 + 'vw';
+            balloon.style.animationDelay = Math.random() * 6 + 's';
+            balloon.style.backgroundColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            balloonsContainer.appendChild(balloon);
+        }
+
+        // Create Animated Falling Flowers Background
+        const flowersContainer = document.getElementById('flowersContainer');
+        const flowers = ['🌸', '🌺', '✨', '💜', '🌸'];
+
+        for (let i = 0; i < 15; i++) {
+            let flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.animationDelay = Math.random() * 5 + 's';
+            flower.style.animationDuration = (4 + Math.random() * 4) + 's';
+            flowersContainer.appendChild(flower);
+        }
+    </script>
+</body>
+</html>
